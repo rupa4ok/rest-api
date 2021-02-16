@@ -1,0 +1,29 @@
+version: "3"
+services:
+    rest-go-mysql:
+        image: mysql:8
+        volumes:
+            - "$PWD/.data/db/mysql8:/var/lib/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
+            MYSQL_DATABASE: db
+        ports:
+            - 33088:3306
+        networks:
+            - rest-go-network
+    rest-go-app:
+        build:
+            dockerfile: ./docker/app/Dockerfile
+            context: ./
+        container_name: rest-go-app
+        environment:
+            DB_CONNECTIONS_COUNT: 250
+        depends_on:
+            - rest-go-mysql
+        networks:
+            - rest-go-network
+networks:
+    rest-go-network:
+        external: true
