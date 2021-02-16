@@ -3,7 +3,7 @@ package Models
 import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	Config2 "rest/Config"
+	Config2 "main/src/Config"
 )
 
 func GetAllBook(b *[]Book) (err error) {

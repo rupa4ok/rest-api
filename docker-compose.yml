@@ -22,8 +22,11 @@ services:
             DB_CONNECTIONS_COUNT: 250
         depends_on:
             - rest-go-mysql
+        ports:
+            - 8089:8080
         networks:
             - rest-go-network
+        command: bin/main
 networks:
     rest-go-network:
         external: true

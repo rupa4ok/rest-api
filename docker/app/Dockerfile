@@ -27,7 +27,7 @@ FROM build_base AS server_builder
 COPY . .
 
 # And compile the project
-RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go install -a -tags netgo -ldflags '-w -extldflags "-static"' ./src
+RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go install -a -tags netgo -ldflags '-w -extldflags "-static"' ./
 
 #In this last stage, we start from a fresh Alpine image, to reduce the image size and not ship the Go compiler in our production artifacts.
 FROM alpine AS weaviate
@@ -36,3 +36,5 @@ RUN apk update && apk add sqlite bash ca-certificates git gcc g++ libc-dev && rm
 
 # Finally we copy the statically compiled Go binary.
 COPY --from=server_builder /go/bin/main /bin/main
+
+CMD ["./main"]

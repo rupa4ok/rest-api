@@ -12,7 +12,7 @@ var err error
 
 func main() {
 
-	Config2.DB, err = gorm.Open("mysql", "user:password@tcp(rest-go-mysql:3306)/testinger?charset=utf8&parseTime=True&loc=Local")
+	Config2.DB, err = gorm.Open("mysql", "user:password@tcp(rest-go-mysql:3306)/db?charset=utf8&parseTime=True&loc=Local")
 
 	if err != nil {
 		fmt.Println("statuse: ", err)
