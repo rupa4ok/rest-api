@@ -1,16 +1,16 @@
 package Models
 
 import (
-	"github.com/jinzhu/gorm"
+	"github.com/google/uuid"
 )
 
 type Book struct {
-	gorm.Model
-	Name     string `json:"name"`
-	Author   string `json:"author"`
-	Category string `json:"category"`
+	ID       uuid.UUID `gorm:"primary_key;type:char(36)"`
+	Name     string    `json:"name"`
+	Author   string    `json:"author"`
+	Category string    `json:"category"`
 }
 
 func (b *Book) TableName() string {
-	return "book"
+	return "books"
 }

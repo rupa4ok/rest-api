@@ -3,6 +3,7 @@ package Models
 import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/google/uuid"
 	Config2 "main/src/Config"
 )
 
@@ -14,6 +15,7 @@ func GetAllBook(b *[]Book) (err error) {
 }
 
 func AddNewBook(b *Book) (err error) {
+	b.ID, _ = uuid.NewUUID()
 	if err = Config2.DB.Create(b).Error; err != nil {
 		return err
 	}
