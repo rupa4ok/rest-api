@@ -10,7 +10,7 @@ services:
             MYSQL_PASSWORD: password
             MYSQL_DATABASE: db
         ports:
-            - 3306:3306
+            - 33082:3306
         networks:
             - rest-go-network
     rest-go-app:
