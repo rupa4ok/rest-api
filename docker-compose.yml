@@ -10,7 +10,7 @@ services:
             MYSQL_PASSWORD: password
             MYSQL_DATABASE: db
         ports:
-            - 33088:3306
+            - 3306:3306
         networks:
             - rest-go-network
     rest-go-app:
@@ -19,11 +19,12 @@ services:
             context: ./
         container_name: rest-go-app
         environment:
+            DB_CONNECTION: user:password@tcp(rest-go-mysql:3306)/db
             DB_CONNECTIONS_COUNT: 250
         depends_on:
             - rest-go-mysql
         ports:
-            - 8089:8080
+            - 8080:8080
         networks:
             - rest-go-network
         command: bin/main

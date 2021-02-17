@@ -1,6 +1,10 @@
 # Base build image
 FROM golang:1.15.7-alpine AS build_base
 
+ENV APP_NAME server
+ENV PORT 8080
+ENV DB_CONNECTION user:password@tcp(rest-go-mysql:3306)/db
+
 # Install some dependencies needed to build the project
 RUN apk update && apk add bash ca-certificates git gcc g++ libc-dev && rm -rf /var/cache/apk/*
 WORKDIR /go/src/github.com/quest-api
@@ -28,6 +32,7 @@ COPY . .
 
 # And compile the project
 RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go install -a -tags netgo -ldflags '-w -extldflags "-static"' ./
+RUN go build -o ${APP_NAME}
 
 #In this last stage, we start from a fresh Alpine image, to reduce the image size and not ship the Go compiler in our production artifacts.
 FROM alpine AS weaviate
@@ -35,6 +40,10 @@ FROM alpine AS weaviate
 RUN apk update && apk add sqlite bash ca-certificates git gcc g++ libc-dev && rm -rf /var/cache/apk/*
 
 # Finally we copy the statically compiled Go binary.
-COPY --from=server_builder /go/bin/main /bin/main
+COPY --from=server_builder /go/bin/ /bin/
 
-CMD ["./main"]
+EXPOSE ${PORT}
+
+ENTRYPOINT ./${APP_NAME}
+
+CMD ./${APP_NAME}

@@ -6,13 +6,18 @@ import (
 	Config2 "main/src/Config"
 	Models2 "main/src/Models"
 	Routers2 "main/src/Routers"
+	"os"
+	"runtime"
 )
 
 var err error
 
 func main() {
+	fmt.Println("MaxParallelism: ", MaxParallelism())
 
-	Config2.DB, err = gorm.Open("mysql", "user:password@tcp(rest-go-mysql:3306)/db?charset=utf8&parseTime=True&loc=Local")
+	dbConnection := os.Getenv("DB_CONNECTION")
+
+	Config2.DB, err = gorm.Open("mysql", dbConnection)
 
 	if err != nil {
 		fmt.Println("statuse: ", err)
@@ -23,4 +28,13 @@ func main() {
 	r := Routers2.SetupRouter()
 	// running
 	r.Run()
+}
+
+func MaxParallelism() int {
+	maxProcs := runtime.GOMAXPROCS(0)
+	numCPU := runtime.NumCPU()
+	if maxProcs < numCPU {
+		return maxProcs
+	}
+	return numCPU
 }
