@@ -12,8 +12,29 @@ Setting DB in main.go
 make init
 ```
 
-####After build: localhost:8080
+After build: localhost:8080
 
 Db connection: .env
 
 Default server port in dockerfile: ENV PORT 8080, external port in docker-compose.yml.
+
+## Structure
+```
+├── docker
+│   └── app 
+│       └── Dockerfile
+├── src
+│    ├── Models
+│    │   ├── Book.go // Book models
+│    |	 ├── Scheme.go // Book struct and tabel
+│    ├── Config
+│    │   └── Database.go // Global DB
+│    ├── Controllers
+│    │   └── Book.go // Book Controller
+│    ├── ApiHelpers
+│    │   └── Response.go // response function
+│    └── Routers
+│        └── Routers.go // Routers
+└── main.go
+```
+
