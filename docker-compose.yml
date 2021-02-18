@@ -19,7 +19,7 @@ services:
             context: ./
         container_name: rest-go-app
         environment:
-            DB_CONNECTION: user:password@tcp(rest-go-mysql:3306)/db
+            DB_CONNECTION: ${DB_CONNECTION}
             DB_CONNECTIONS_COUNT: 250
         depends_on:
             - rest-go-mysql

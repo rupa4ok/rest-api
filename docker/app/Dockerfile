@@ -2,7 +2,6 @@
 FROM golang:1.15.7-alpine AS build_base
 
 ENV PORT 8080
-ENV DB_CONNECTION user:password@tcp(rest-go-mysql:3306)/db
 
 # Install some dependencies needed to build the project
 RUN apk update && apk add bash ca-certificates git gcc g++ libc-dev && rm -rf /var/cache/apk/*
