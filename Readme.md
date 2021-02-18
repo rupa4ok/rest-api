@@ -38,3 +38,21 @@ Default server port in dockerfile: ENV PORT 8080, external port in docker-compos
 └── main.go
 ```
 
+## API
+
+#### /book
+* `GET` : Get all book
+* `POST` : Create a new book
+
+#### /book/:id
+* `GET` : Get a book
+* `PUT` : Update a book
+* `DELETE` : Delete a book
+
+#Post Params
+```
+{
+	"author": "Op Super John Doe Bilw",
+	"name": "Implementation Golang",
+	"category": "Knowledge"
+}
